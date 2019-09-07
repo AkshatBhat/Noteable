@@ -6,4 +6,5 @@
     <string name="account_logged_in_successfully">Account Logged In Successfully</string>
     <string name="log_out">LOG OUT</string>
     <string name="forgot_password">Forgot Password</string>
+    <string name="splash_screen_logo">splash_screen_logo</string>
 </resources>
