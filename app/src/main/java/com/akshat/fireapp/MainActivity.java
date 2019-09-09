@@ -156,21 +156,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startLogin () {
-            String Email = email.getText().toString();
-            String Password = password.getText().toString();
+        String Email = email.getText().toString();
+        String Password = password.getText().toString();
 
-            if (TextUtils.isEmpty(Email) || TextUtils.isEmpty(Password)) {
-                Toast.makeText(MainActivity.this, "Fields are empty!", Toast.LENGTH_LONG).show();
-            } else {
-                mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, "Wrong email or password!", Toast.LENGTH_LONG).show();
-                        }
+        if (TextUtils.isEmpty(Email) || TextUtils.isEmpty(Password)) {
+            Toast.makeText(MainActivity.this, "Fields are empty!", Toast.LENGTH_LONG).show();
+        } else {
+            mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(MainActivity.this, "Wrong email or password!", Toast.LENGTH_LONG).show();
                     }
-                });
-            }
+                }
+            });
+        }
     }
 
     @Override
@@ -219,9 +219,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signIn () {
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, RC_SIGN_IN);
-        }
-
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+}

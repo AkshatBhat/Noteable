@@ -6,10 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountActivity extends AppCompatActivity {
@@ -17,6 +24,9 @@ public class AccountActivity extends AppCompatActivity {
     private Button logoutbutton;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInAccount account;
+    private static final String TAG = "GoogleSignInTAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +38,22 @@ public class AccountActivity extends AppCompatActivity {
 
         logoutbutton.setOnClickListener(
                 new Button.OnClickListener(){
-                    public void onClick(View v){
-                        mAuth.signOut();
+                    public void onClick(View v) {
+                        if (account != null) {
+                            mAuth.signOut();
+                            mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    // user is now signed out
+                                    Toast.makeText(AccountActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG,"Google SignOut Successful");
+
+                                }});
+                        }
+
+                        else {
+                            mAuth.signOut();
+                            Toast.makeText(AccountActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
         );
@@ -43,11 +67,20 @@ public class AccountActivity extends AppCompatActivity {
                 }
             }
         };
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        account = GoogleSignIn.getLastSignedInAccount(this);
         mAuth.addAuthStateListener(mAuthListener);
     }
 
