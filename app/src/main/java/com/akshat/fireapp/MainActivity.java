@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -105,11 +106,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) { //meaning the state when user has logged in
-                    startActivity(new Intent(MainActivity.this, AccountActivity.class));
+                    Intent i = new Intent(MainActivity.this, AccountActivity.class);
+                    //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
                     finish();
+                    finish();
+
                 }
             }
         };
+
 
         loginbutton.setOnClickListener(
                 new Button.OnClickListener() {
@@ -170,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+            Toast.makeText(MainActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
         }
     }
 

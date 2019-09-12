@@ -34,6 +34,7 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
 
         mAuth = FirebaseAuth.getInstance();
+
         logoutbutton = (Button) findViewById(R.id.log_out_button);
 
         logoutbutton.setOnClickListener(
@@ -62,7 +63,9 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) { //meaning the state when user has logged out
-                    startActivity(new Intent(AccountActivity.this, MainActivity.class));
+                    Intent i = new Intent(AccountActivity.this, MainActivity.class);
+                    //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
                     finish();
                 }
             }
@@ -84,7 +87,7 @@ public class AccountActivity extends AppCompatActivity {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
-    private Boolean exit = false;
+    /*private Boolean exit = false;
     @Override
     public void onBackPressed() {
         if (exit) {
@@ -99,10 +102,9 @@ public class AccountActivity extends AppCompatActivity {
                     exit = false;
                 }
             }, 3 * 1000);
-
         }
 
-    }
+    }*/
 
 
 }
