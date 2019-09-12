@@ -88,7 +88,7 @@ public class AccountActivity extends AppCompatActivity {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
-    /*private Boolean exit = false;
+    private Boolean exit = false;
     @Override
     public void onBackPressed() {
         if (exit) {
@@ -105,7 +105,7 @@ public class AccountActivity extends AppCompatActivity {
             }, 3 * 1000);
         }
 
-    }*/
+    }
 
 
 }
