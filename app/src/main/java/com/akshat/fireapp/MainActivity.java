@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Email sent.");
-                                Toast.makeText(MainActivity.this, "Check your email to reset your password!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "Check your email to reset your password!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -165,15 +165,18 @@ public class MainActivity extends AppCompatActivity {
         String Password = password.getText().toString();
 
         if (TextUtils.isEmpty(Email) || TextUtils.isEmpty(Password)) {
-            Toast.makeText(MainActivity.this, "Fields are empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Fields are empty!", Toast.LENGTH_SHORT).show();
         } else {
             mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
-                        Toast.makeText(MainActivity.this, "Wrong email or password!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Wrong email or password!", Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(MainActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        Toast.makeText(MainActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
