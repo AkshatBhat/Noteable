@@ -7,4 +7,6 @@
     <string name="log_out">LOG OUT</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="splash_screen_logo">splash_screen_logo</string>
+    <string name="loading">Loading...</string>
+    <string name="todo">TODO</string>
 </resources>
