@@ -24,7 +24,7 @@
             android:layout_height="216dp"
             android:layout_gravity="center"
             android:layout_marginBottom="0dp"
-            android:src="@drawable/share_logo_p"
+            android:src="@drawable/final3"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -89,18 +89,25 @@
             app:layout_constraintTop_toBottomOf="@+id/password"
             app:layout_constraintVertical_bias="0.124" />
 
+        <LinearLayout
+            android:id="@+id/HorizontallinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
         <TextView
-            android:id="@+id/forgot_password"
+            android:id="@+id/sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="start"
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="6dp"
             android:layout_marginBottom="15dp"
             android:clickable="true"
             android:focusable="true"
-            android:text="@string/forgot_password"
+            android:text="@string/new_user_sign_up"
             android:textColorHighlight="@android:color/holo_blue_light"
             app:layout_constraintBottom_toTopOf="@+id/google_sign_in_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -108,6 +115,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginbutton"
             app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="15dp"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/forgot_password"
+                android:textColorHighlight="@android:color/holo_blue_light"
+                app:layout_constraintBottom_toTopOf="@+id/google_sign_in_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loginbutton"
+                app:layout_constraintVertical_bias="0.0" />
+        </LinearLayout>
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_sign_in_button"
