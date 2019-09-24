@@ -138,7 +138,8 @@ public class MainActivity extends AppCompatActivity {
         // [START send_password_reset]
         String Email = email.getText().toString();
         if (TextUtils.isEmpty(Email)) {
-            Toast.makeText(MainActivity.this, "Enter your email!", Toast.LENGTH_SHORT).show();
+            email.setError("Enter Email!");
+            email.requestFocus();
         }
         else{
             mAuth.sendPasswordResetEmail(Email)
@@ -147,7 +148,12 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Email sent.");
-                                Toast.makeText(MainActivity.this, "Check your email to reset your password!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Check your email to reset your password!", Toast.LENGTH_LONG).show();
+                            }
+                            else
+                            {
+                                email.setError("Enter Valid Email!");
+                                email.requestFocus();
                             }
                         }
                     });
@@ -161,18 +167,39 @@ public class MainActivity extends AppCompatActivity {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+    public static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
     private void startLogin () {
         String Email = email.getText().toString();
         String Password = password.getText().toString();
 
-        if (TextUtils.isEmpty(Email) || TextUtils.isEmpty(Password)) {
+        if (TextUtils.isEmpty(Email)) {
+            email.setError("Enter Email!");
+            email.requestFocus();
+        }
+
+        else if(!isValidEmail(email.getText().toString())) {
+            email.setError("Enter Valid Email!");
+            email.requestFocus();
+        }
+
+        else if(TextUtils.isEmpty(Password)){
+            password.setError("Enter Password!");
+            password.requestFocus();
+        }
+
+        else if(TextUtils.isEmpty(Email) && TextUtils.isEmpty(Password)){
             Toast.makeText(MainActivity.this, "Fields are empty!", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+
+        else {
             mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
-                        Toast.makeText(MainActivity.this, "Wrong email or password!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Wrong Email or Password!", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
