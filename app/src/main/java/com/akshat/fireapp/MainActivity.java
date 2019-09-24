@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private SignInButton signInButton;
     private EditText email;
     private EditText password;
+    private TextView signup;
     private Button loginbutton;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -79,12 +79,31 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
-        loginbutton = (Button) findViewById(R.id.loginbutton);
-
+        loginbutton = (Button) findViewById(R.id.signupbutton);
+        signup = (TextView) findViewById(R.id.sign_up);
         forgotpass = (TextView) findViewById(R.id.forgot_password);
+
+        SpannableString sss = new SpannableString(signup.getText());
+        ClickableSpan css = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setColor(getResources().getColor(R.color.colorPrimary));
+                ds.setUnderlineText(false);
+            }
+        };
+        sss.setSpan(css,0,17, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        signup.setText(sss);
+        signup.setMovementMethod(LinkMovementMethod.getInstance());
+
+
         SpannableString ss = new SpannableString(forgotpass.getText());
         ClickableSpan cs = new ClickableSpan() {
             @Override

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:background="@android:color/holo_blue_light"
     android:padding="10dp"
-    tools:context=".MainActivity">
+    tools:context=".SignUpActivity">
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -40,7 +40,7 @@
             android:layout_marginBottom="8dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/Email"
+            android:hint="@string/enter_email"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/colorPrimary"
             android:drawableStart="@drawable/baseline_email_1x"
@@ -60,7 +60,7 @@
             android:layout_marginBottom="8dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/password"
+            android:hint="@string/enter_password"
             android:inputType="textPassword"
             android:textColorHint="@color/colorPrimary"
             android:drawableStart="@drawable/baseline_lock_1x"
@@ -80,7 +80,7 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/butttonshape"
             android:shadowColor="@color/common_google_signin_btn_text_dark_focused"
-            android:text="@string/Login_Button"
+            android:text="@string/Signup_button"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -89,38 +89,12 @@
             app:layout_constraintTop_toBottomOf="@+id/password"
             app:layout_constraintVertical_bias="0.124" />
 
-        <LinearLayout
-            android:id="@+id/HorizontallinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
-
-        <TextView
-            android:id="@+id/sign_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginBottom="15dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/new_user_sign_up"
-            android:textColorHighlight="@android:color/holo_blue_light"
-            app:layout_constraintBottom_toTopOf="@+id/google_sign_in_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signupbutton"
-            app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/forgot_password"
+                android:id="@+id/redirect_to_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="6dp"
@@ -128,7 +102,7 @@
 
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/forgot_password"
+                android:text="@string/have_an_account_log_in"
                 android:textColorHighlight="@android:color/holo_blue_light"
                 app:layout_constraintBottom_toTopOf="@+id/google_sign_in_button"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -136,22 +110,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signupbutton"
                 app:layout_constraintVertical_bias="0.0" />
-        </LinearLayout>
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/google_sign_in_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.052"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.248" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
