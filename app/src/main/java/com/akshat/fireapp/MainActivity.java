@@ -89,7 +89,11 @@ public class MainActivity extends AppCompatActivity {
         ClickableSpan css = new ClickableSpan() {
             @Override
             public void onClick(View view) {
-
+                Intent i = new Intent(MainActivity.this,SignUpActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                finish();
             }
 
             @Override

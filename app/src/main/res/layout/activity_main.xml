@@ -20,17 +20,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="289dp"
-            android:layout_height="216dp"
+            android:layout_width="190dp"
+            android:layout_height="218dp"
             android:layout_gravity="center"
             android:layout_marginBottom="0dp"
+            android:contentDescription="@string/logoicon"
             android:src="@drawable/final3"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/logoicon" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/email"

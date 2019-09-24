@@ -60,7 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
                 ds.setUnderlineText(false);
             }
         };
-        ss.setSpan(cs,0,15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(cs,0,login.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         login.setText(ss);
         login.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -72,6 +72,19 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() != null) { //meaning the state when user has logged in
+                    Intent i = new Intent(SignUpActivity.this, AccountActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                    finish();
+                }
+            }
+        };
     }
 
 
@@ -105,27 +118,28 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(SignUpActivity.this, "Fields are empty!", Toast.LENGTH_SHORT).show();
         }
 
-        else{
+        else if(!(TextUtils.isEmpty(Email) && TextUtils.isEmpty(Password))){
             mAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
-                        Toast.makeText(SignUpActivity.this.getApplicationContext(), "Sign Up Unsuccessful!"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this.getApplicationContext(), "Sign Up Unsuccessful! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                    else
-                    {
+                    else {
                         Toast.makeText(SignUpActivity.this, "Signed Up successfully", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(SignUpActivity.this,AccountActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(i);
-                        finish();
                     }
                 }
             });
-
         }
+
+        else {
+            Toast.makeText(SignUpActivity.this, "Unknown Error Occurred!", Toast.LENGTH_SHORT).show();
+        }
+
     }
+
+
+
 
 
     public static boolean isValidEmail(CharSequence target) {

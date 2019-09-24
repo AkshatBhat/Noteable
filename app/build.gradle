@@ -2,12 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        release {
-            storeFile file('C:\\Users\\Akshat\\OneDrive\\Desktop\\Android YT\\KEYS\\releasekey.jks')
-            storePassword 'akshat'
-            keyAlias = 'FireAppReleaseKey'
-            keyPassword 'akshat'
-        }
+
     }
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
