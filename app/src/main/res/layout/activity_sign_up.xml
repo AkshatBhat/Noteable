@@ -72,6 +72,26 @@
             app:layout_constraintVertical_bias="0.276"
             tools:targetApi="o" />
 
+        <EditText
+            android:id="@+id/confirmpassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/colorPrimary"
+            android:drawableStart="@drawable/baseline_lock_1x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.276"
+            tools:targetApi="o" />
+
         <Button
             android:id="@+id/signupbutton"
             android:layout_width="match_parent"

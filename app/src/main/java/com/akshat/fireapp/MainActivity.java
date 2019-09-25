@@ -3,6 +3,7 @@ package com.akshat.fireapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Bucky";
     private static final int RC_SIGN_IN = 9001;
+    private static final String DIALOGMESSAGE = "Logging In ...";
     private SignInButton signInButton;
     private EditText email;
     private EditText password;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleSignInClient mGoogleSignInClient;
     private TextView forgotpass;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         loginbutton = (Button) findViewById(R.id.signupbutton);
         signup = (TextView) findViewById(R.id.sign_up);
         forgotpass = (TextView) findViewById(R.id.forgot_password);
+        progressDialog = new ProgressDialog(this);
 
         SpannableString sss = new SpannableString(signup.getText());
         ClickableSpan css = new ClickableSpan() {
@@ -165,16 +169,19 @@ public class MainActivity extends AppCompatActivity {
             email.requestFocus();
         }
         else{
+            showProgressDialogWithTitle("Working on it ...");
             mAuth.sendPasswordResetEmail(Email)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
+                                hideProgressDialogWithTitle();
                                 Log.d(TAG, "Email sent.");
                                 Toast.makeText(MainActivity.this, "Check your email to reset your password!", Toast.LENGTH_LONG).show();
                             }
                             else
                             {
+                                hideProgressDialogWithTitle();
                                 email.setError("Enter Valid Email!");
                                 email.requestFocus();
                             }
@@ -218,14 +225,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else {
+            showProgressDialogWithTitle(DIALOGMESSAGE);
             mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
+                        hideProgressDialogWithTitle();
                         Toast.makeText(MainActivity.this, "Wrong Email or Password!", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
+                        hideProgressDialogWithTitle();
                         Toast.makeText(MainActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -243,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
+                showProgressDialogWithTitle(DIALOGMESSAGE);
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
@@ -264,11 +275,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            hideProgressDialogWithTitle();
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                         } else {
+                            hideProgressDialogWithTitle();
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
@@ -282,6 +295,22 @@ public class MainActivity extends AppCompatActivity {
     private void signIn () {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+
+    // Method to show Progress bar
+    private void showProgressDialogWithTitle(String substring) {
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        //Without this user can hide loader by tapping outside screen
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(substring);
+        progressDialog.show();
+    }
+
+    // Method to hide/ dismiss Progress bar
+    private void hideProgressDialogWithTitle() {
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.dismiss();
     }
 
 }

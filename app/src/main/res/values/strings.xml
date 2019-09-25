@@ -15,4 +15,5 @@
     <string name="have_an_account_log_in">Have an account? Log In</string>
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>

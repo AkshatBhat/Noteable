@@ -3,6 +3,7 @@ package com.akshat.fireapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -24,12 +25,16 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private static final String DIALOGMESSAGE = "Signing Up ...";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private EditText email;
     private EditText password;
+    private EditText confirmpassword;
     private TextView login;
     private Button signupbutton;;
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +44,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
+        confirmpassword = (EditText) findViewById(R.id.confirmpassword);
         signupbutton = (Button) findViewById(R.id.signupbutton);
         login = (TextView) findViewById(R.id.redirect_to_login);
+        progressDialog = new ProgressDialog(this);
 
         SpannableString ss = new SpannableString(login.getText());
         ClickableSpan cs = new ClickableSpan() {
@@ -98,6 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void startLogin () {
         String Email = email.getText().toString();
         String Password = password.getText().toString();
+        String ConfirmPassword = confirmpassword.getText().toString();
 
         if (TextUtils.isEmpty(Email)) {
             email.setError("Enter Email!");
@@ -118,18 +126,33 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(SignUpActivity.this, "Fields are empty!", Toast.LENGTH_SHORT).show();
         }
 
+        else if(TextUtils.isEmpty(ConfirmPassword))
+        {
+            confirmpassword.setError("Enter Password Again!");
+            confirmpassword.requestFocus();
+        }
+
         else if(!(TextUtils.isEmpty(Email) && TextUtils.isEmpty(Password))){
-            mAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (!task.isSuccessful()) {
-                        Toast.makeText(SignUpActivity.this.getApplicationContext(), "Sign Up Unsuccessful! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            if(ConfirmPassword.equals(Password)) {
+                showProgressDialogWithTitle(DIALOGMESSAGE);
+                mAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            hideProgressDialogWithTitle();
+                            Toast.makeText(SignUpActivity.this.getApplicationContext(), "Sign Up Unsuccessful! " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+                            hideProgressDialogWithTitle();
+                            Toast.makeText(SignUpActivity.this, "Signed Up successfully", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else {
-                        Toast.makeText(SignUpActivity.this, "Signed Up successfully", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+                });
+            }
+            else
+            {
+                confirmpassword.setError("Entered Passwords Do Not Match!");
+                confirmpassword.requestFocus();
+            }
         }
 
         else {
@@ -139,11 +162,24 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-
-
-
     public static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+
+    // Method to show Progress bar
+    private void showProgressDialogWithTitle(String substring) {
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        //Without this user can hide loader by tapping outside screen
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(substring);
+        progressDialog.show();
+    }
+
+    // Method to hide/ dismiss Progress bar
+    private void hideProgressDialogWithTitle() {
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.dismiss();
     }
 
 

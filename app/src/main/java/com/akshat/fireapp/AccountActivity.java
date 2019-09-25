@@ -3,6 +3,7 @@ package com.akshat.fireapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +28,8 @@ public class AccountActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount account;
     private static final String TAG = "GoogleSignInTAG";
+    private ProgressDialog progressDialog;
+    private static final String DIALOGMESSAGE = "Logging out ...";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +38,13 @@ public class AccountActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        progressDialog = new ProgressDialog(this);
         logoutbutton = (Button) findViewById(R.id.log_out_button);
 
         logoutbutton.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v) {
+                        showProgressDialogWithTitle(DIALOGMESSAGE);
                         if (account != null) {
                             mAuth.signOut();
                             mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -47,7 +52,6 @@ public class AccountActivity extends AppCompatActivity {
                                     // user is now signed out
                                     Toast.makeText(AccountActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
                                     Log.d(TAG,"Google SignOut Successful");
-
                                 }});
                         }
 
@@ -105,6 +109,22 @@ public class AccountActivity extends AppCompatActivity {
             }, 3 * 1000);
         }
 
+    }
+
+
+    // Method to show Progress bar
+    private void showProgressDialogWithTitle(String substring) {
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        //Without this user can hide loader by tapping outside screen
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(substring);
+        progressDialog.show();
+    }
+
+    // Method to hide/ dismiss Progress bar
+    private void hideProgressDialogWithTitle() {
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.dismiss();
     }
 
 
