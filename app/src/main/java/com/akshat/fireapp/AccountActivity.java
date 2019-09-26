@@ -149,7 +149,7 @@ public class AccountActivity extends AppCompatActivity {
             String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
 
-            // Check if user's email is verified
+            // Check if user's email is verified or not
             boolean emailVerified = user.isEmailVerified();
 
             // The user's ID, unique to the Firebase project. Do NOT use this value to
