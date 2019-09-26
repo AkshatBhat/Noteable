@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.squareup.picasso.Picasso;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -74,6 +76,7 @@ public class AccountActivity extends AppCompatActivity {
         );
 
         getUserProfile();
+        getProviderData();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -158,9 +161,42 @@ public class AccountActivity extends AppCompatActivity {
             //String uid = user.getUid();
             displayusername.setText("Username: "+name);
             displayemail.setText("Email: "+email);
-            displayimage.setImageURI(photoUrl);
+            Picasso.get()
+                    .load(photoUrl)
+                    .placeholder(R.drawable.profileicon)
+                    .error(R.drawable.profileicon)
+                    .into(displayimage);
         }
         // [END get_user_profile]
+    }
+
+    public void getProviderData() {
+        // [START get_provider_data]
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+                // Id of the provider (ex: google.com)
+                String providerId = profile.getProviderId();
+
+                // UID specific to the provider
+                String uid = profile.getUid();
+
+                // Name, email address, and profile photo Url
+                String name = profile.getDisplayName();
+                String email = profile.getEmail();
+                Uri photoUrl = profile.getPhotoUrl();
+
+                displayusername.setText("Username: "+name);
+                displayemail.setText("Email: "+email);
+                Picasso.get()
+                        .load(photoUrl)
+                        .placeholder(R.drawable.profileicon)
+                        .error(R.drawable.profileicon)
+                        .into(displayimage);
+
+            }
+        }
+        // [END get_provider_data]
     }
 
 

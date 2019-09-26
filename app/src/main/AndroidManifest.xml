@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.akshat.fireapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".FireApp"
         android:allowBackup="true"
