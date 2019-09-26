@@ -262,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 // ...
                 Toast.makeText(this, "Google Sign In failed",
                         Toast.LENGTH_SHORT).show();
+                hideProgressDialogWithTitle();
             }
         }
     }

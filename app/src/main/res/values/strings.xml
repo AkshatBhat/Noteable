@@ -16,4 +16,8 @@
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="updateprofile">Update Profile</string>
+    <string name="display_email">Display Email</string>
+    <string name="display_username">Display Username</string>
 </resources>

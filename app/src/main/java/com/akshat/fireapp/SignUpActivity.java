@@ -84,7 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) { //meaning the state when user has logged in
-                    Intent i = new Intent(SignUpActivity.this, AccountActivity.class);
+                    Intent i = new Intent(SignUpActivity.this, Profile.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
