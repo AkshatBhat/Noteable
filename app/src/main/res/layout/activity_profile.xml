@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light"
+    android:background="@color/PrimaryDark"
     android:padding="10dp"
     tools:context=".Profile">
 
@@ -36,7 +36,7 @@
             android:ems="10"
             android:hint="@string/enter_username"
             android:inputType="textPersonName"
-            android:textColorHint="@color/colorPrimary"
+            android:textColorHint="@color/PrimaryComplement"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
             android:background="@drawable/butttonshape"
             android:shadowColor="@color/common_google_signin_btn_text_dark_focused"
             android:text="@string/updateprofile"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/PrimaryDark"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

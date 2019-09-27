@@ -35,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button signupbutton;;
     private ProgressDialog progressDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(getResources().getColor(R.color.colorPrimary));
+                ds.setColor(getResources().getColor(R.color.Primary));
                 ds.setUnderlineText(false);
             }
         };
@@ -134,15 +135,15 @@ public class SignUpActivity extends AppCompatActivity {
 
         else if(!(TextUtils.isEmpty(Email) && TextUtils.isEmpty(Password))){
             if(ConfirmPassword.equals(Password)) {
-                showProgressDialogWithTitle(DIALOGMESSAGE);
+//                showProgressDialogWithTitle(DIALOGMESSAGE);
                 mAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            hideProgressDialogWithTitle();
+//                            hideProgressDialogWithTitle();
                             Toast.makeText(SignUpActivity.this.getApplicationContext(), "Sign Up Unsuccessful! " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         } else {
-                            hideProgressDialogWithTitle();
+//                            hideProgressDialogWithTitle();
                             Toast.makeText(SignUpActivity.this, "Signed Up successfully", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -167,20 +168,20 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    // Method to show Progress bar
-    private void showProgressDialogWithTitle(String substring) {
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        //Without this user can hide loader by tapping outside screen
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage(substring);
-        progressDialog.show();
-    }
-
-    // Method to hide/ dismiss Progress bar
-    private void hideProgressDialogWithTitle() {
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.dismiss();
-    }
+//    // Method to show Progress bar
+//    private void showProgressDialogWithTitle(String substring) {
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        //Without this user can hide loader by tapping outside screen
+//        progressDialog.setCancelable(false);
+//        progressDialog.setMessage(substring);
+//        progressDialog.show();
+//    }
+//
+//    // Method to hide/ dismiss Progress bar
+//    private void hideProgressDialogWithTitle() {
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.dismiss();
+//    }
 
 
 

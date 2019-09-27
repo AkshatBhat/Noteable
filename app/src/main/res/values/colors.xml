@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="PrimaryDark">#081831</color>
-    <color name="Primary">#032539</color>
-    <color name="PrimaryLight">#1c768f</color>
-    <color name="SecondaryDark"> #ff8f00</color>
-    <color name="Secondary"> #f8a53a </color>
-    <color name="GreyDark">#41545D</color>
-    <color name="Grey">#94A2AB</color>
-<color name="GreyLight">#90CDC8</color>
+    <color name="PrimaryDark">      #081831</color>
+    <color name="Primary">          #032539</color>
+    <color name="PrimaryLight">     #1c768f</color>
+    <color name="Secondary">    #ff8f00</color>
+    <color name="SecondaryLight">        #f8a53a </color>
+    <color name="GreyDark">         #41545D</color>
+    <color name="PrimaryComplement">#94A2AB</color>
+    <color name="BlueGrey">         #90CDC8</color>
 </resources>

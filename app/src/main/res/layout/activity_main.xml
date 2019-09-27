@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="@android:color/holo_blue_light"
+    android:background="@color/PrimaryDark"
     android:padding="10dp"
     tools:context=".MainActivity">
 
@@ -42,8 +42,8 @@
             android:ems="10"
             android:hint="@string/Email"
             android:inputType="textEmailAddress"
-            android:textColorHint="@color/colorPrimary"
-            android:drawableStart="@drawable/baseline_email_1x"
+            android:textColorHint="@color/PrimaryComplement"
+            android:drawableStart="@drawable/ic_email_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -62,8 +62,8 @@
             android:ems="10"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textColorHint="@color/colorPrimary"
-            android:drawableStart="@drawable/baseline_lock_1x"
+            android:textColorHint="@color/PrimaryComplement"
+            android:drawableStart="@drawable/ic_lock_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -81,7 +81,7 @@
             android:background="@drawable/butttonshape"
             android:shadowColor="@color/common_google_signin_btn_text_dark_focused"
             android:text="@string/Login_Button"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/PrimaryDark"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +108,8 @@
             android:clickable="true"
             android:focusable="true"
             android:text="@string/new_user_sign_up"
-            android:textColorHighlight="@android:color/holo_blue_light"
+            android:textColorHighlight="@color/Primary"
+            android:textColor="@color/PrimaryComplement"
             app:layout_constraintBottom_toTopOf="@+id/google_sign_in_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -129,7 +130,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/forgot_password"
-                android:textColorHighlight="@android:color/holo_blue_light"
+                android:textColorHighlight="@color/Primary"
+                android:textColor="@color/PrimaryComplement"
                 app:layout_constraintBottom_toTopOf="@+id/google_sign_in_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -138,33 +140,17 @@
                 app:layout_constraintVertical_bias="0.0" />
         </LinearLayout>
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/google_sign_in_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.052"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.248" />
+            <com.google.android.gms.common.SignInButton
+                style="@style/ThemeOverlay.MaterialComponents.Dark"
+                android:id="@+id/google_sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"/>
 
 
     </LinearLayout>
-
-<!--    <ProgressBar-->
-<!--        android:id="@+id/progressBar"-->
-<!--        android:layout_width="117dp"-->
-<!--        android:layout_height="89dp"-->
-<!--        android:visibility="invisible"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>

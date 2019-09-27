@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(getResources().getColor(R.color.colorPrimary));
+                ds.setColor(getResources().getColor(R.color.Primary));
                 ds.setUnderlineText(false);
             }
         };
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(getResources().getColor(R.color.colorPrimary));
+                ds.setColor(getResources().getColor(R.color.Primary));
                 ds.setUnderlineText(false);
             }
         };

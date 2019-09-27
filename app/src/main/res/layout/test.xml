@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@android:color/white"
     tools:context=".AccountActivity">
 
     <Button
@@ -15,11 +15,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/Primary"
         android:shadowColor="#090216"
         android:shadowRadius="5"
         android:text="@string/log_out"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/PrimaryComplement"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.973"
@@ -39,14 +39,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:backgroundTint="@color/colorPrimary"
+            android:addStatesFromChildren="false"
+            android:clickable="true"
+            android:clipChildren="true"
+            android:clipToPadding="true"
+            android:focusable="auto"
+            android:focusableInTouchMode="true"
+            android:isScrollContainer="false"
+            android:keepScreenOn="false"
+            android:saveEnabled="false"
+            app:backgroundTint="@color/PrimaryDark"
+            app:collapseIcon="@drawable/ic_share_black_24dp"
             app:fabCradleRoundedCornerRadius="15dp"
-            app:navigationIcon="@drawable/ic_dehaze_black_24dp" />
+            app:navigationIcon="@drawable/ic_expand_less_black_24dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="101dp"
+            android:backgroundTint="@color/Secondary"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
             app:layout_anchor="@id/bar"
             app:srcCompat="@drawable/ic_add_black_24dp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
