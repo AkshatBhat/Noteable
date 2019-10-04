@@ -20,4 +20,5 @@
     <string name="updateprofile">Update Profile</string>
     <string name="display_email">Display Email</string>
     <string name="display_username">Display Username</string>
+    <string name="title_activity_notepad">Notepad</string>
 </resources>

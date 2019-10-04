@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.akshat.fireapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
     <application
         android:name=".FireApp"
         android:allowBackup="true"
@@ -15,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Profile"></activity>
+        <activity android:name=".Notepad"></activity>
+        <activity android:name=".Profile" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SplashScreen">
             <intent-filter>
@@ -27,5 +26,7 @@
         <activity android:name=".AccountActivity" />
         <activity android:name=".MainActivity" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

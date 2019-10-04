@@ -10,14 +10,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/account_logged_in_successfully"
-        android:textColor="@color/PrimaryComplement"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.579" />
+        app:layout_constraintVertical_bias="0.579"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -38,7 +37,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/display_username"
-        android:textColor="@color/PrimaryComplement"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +50,6 @@
         android:layout_height="wrap_content"
         android:text="@string/display_email"
         android:textSize="22sp"
-        android:textColor="@color/PrimaryComplement"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,48 +65,25 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/log_out"
-        android:textColor="@color/PrimaryComplement"
-        android:backgroundTint="@color/Primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.973"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <!-- Other components and views -->
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bar"
-            style="@style/Widget.MaterialComponents.BottomAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:addStatesFromChildren="false"
-            android:clickable="true"
-            android:clipChildren="true"
-            android:clipToPadding="true"
-            android:focusable="auto"
-            android:focusableInTouchMode="true"
-            android:isScrollContainer="false"
-            android:keepScreenOn="false"
-            android:saveEnabled="false"
-            app:backgroundTint="@color/PrimaryDark"
-            app:collapseIcon="@drawable/ic_share_black_24dp"
-            app:fabCradleRoundedCornerRadius="15dp"
-            app:navigationIcon="@drawable/ic_expand_less_black_24dp" />
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
-            android:layout_height="101dp"
-            android:backgroundTint="@color/Secondary"
-            android:clickable="true"
-            android:focusableInTouchMode="true"
-            app:layout_anchor="@id/bar"
-            app:srcCompat="@drawable/ic_add_black_24dp" />
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            android:layout_gravity="bottom|center"
+
+            />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

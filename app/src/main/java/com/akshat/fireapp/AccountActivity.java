@@ -21,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -39,6 +40,7 @@ public class AccountActivity extends AppCompatActivity {
     private static final String TAG = "GoogleSignInTAG";
     private ProgressDialog progressDialog;
     private static final String DIALOGMESSAGE = "Logging out ...";
+    private FloatingActionButton fab ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class AccountActivity extends AppCompatActivity {
         displayusername = (TextView)findViewById(R.id.display_username);
         displayemail = (TextView)findViewById(R.id.display_email);
         displayimage = (ImageView)findViewById(R.id.profile_image);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         logoutbutton.setOnClickListener(
                 new Button.OnClickListener(){
@@ -74,6 +77,17 @@ public class AccountActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(AccountActivity.this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                finish();
+            }
+        });
 
         getUserProfile();
         getProviderData();
