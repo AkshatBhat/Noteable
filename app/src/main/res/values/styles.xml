@@ -17,4 +17,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="TextInputLayout">
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:textColor">#FFFF00</item>
+    </style>
+
 </resources>

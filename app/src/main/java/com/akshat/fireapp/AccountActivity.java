@@ -78,10 +78,10 @@ public class AccountActivity extends AppCompatActivity {
                 }
         );
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AccountActivity.this, MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), NoteStaggeredView.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);

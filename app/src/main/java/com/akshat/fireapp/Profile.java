@@ -70,7 +70,6 @@ public class Profile extends AppCompatActivity {
                         else{
                             uploadFile();
                         }
-                        updateProfile();
                     }
                 }
         );
@@ -112,12 +111,12 @@ public class Profile extends AppCompatActivity {
     }
 
 
-    private void updateProfile(){
+    private void updateProfile(Uri imageUrl){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(profilename.getText().toString())
-                .setPhotoUri(imageUri)
+                .setPhotoUri(imageUrl)
                 .build();
 
         user.updateProfile(profileUpdates)
@@ -153,22 +152,23 @@ public class Profile extends AppCompatActivity {
     private void uploadFile(){
         if(imageUri!=null)
         {
-            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
+            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()+"."+getFileExtension(imageUri));
             mUploadTask = fileReference.putFile(imageUri)
                      .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                          @Override
                          public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                             /*Handler handler = new Handler();
-                             handler.postDelayed(new Runnable(){
+                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                  @Override
-                                 public void run() {
-                                     mProgressBar.setProgress(0);1                                 }
-                                                                  },5000);*/
+                                 public void onSuccess(Uri uri) {
 
-                             Toast.makeText(Profile.this,"Upload Successful",Toast.LENGTH_SHORT).show();
-                             Upload upload = new Upload(profilename.getText().toString().trim(),taskSnapshot.getUploadSessionUri().toString());
-                             String uploadId = mDatabaseRef.push().getKey();
-                             mDatabaseRef.child(uploadId).setValue(upload);
+                                     Toast.makeText(Profile.this,"Upload Successful",Toast.LENGTH_SHORT).show();
+//                                     Upload upload = new Upload(profilename.getText().toString().trim(),taskSnapshot.getUploadSessionUri().toString());
+//                                     String uploadId = mDatabaseRef.push().getKey();
+                                    // mDatabaseRef.child(uploadId).setValue(upload);
+                                     updateProfile(uri);
+
+                                 }
+                             });
                          }
                      })
                     .addOnFailureListener(new OnFailureListener() {

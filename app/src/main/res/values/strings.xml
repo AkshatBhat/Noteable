@@ -21,4 +21,9 @@
     <string name="display_email">Display Email</string>
     <string name="display_username">Display Username</string>
     <string name="title_activity_notepad">Notepad</string>
+    <string name="title">Title</string>
+    <string name="type_your_description">Type your description...</string>
+    <string name="create_note">Create Note</string>
+    <string name="titleInCardView">title</string>
+    <string name="contentInCardView">content</string>
 </resources>

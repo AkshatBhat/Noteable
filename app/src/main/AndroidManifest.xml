@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Notepad"></activity>
+        <activity android:name=".NewNoteActivity"></activity>
+        <activity android:name=".NoteStaggeredView" />
         <activity android:name=".Profile" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SplashScreen">
