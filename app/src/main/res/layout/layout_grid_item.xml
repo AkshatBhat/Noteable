@@ -40,8 +40,9 @@
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="6dp"
                 android:hint="@string/titleInCardView"
-                android:textStyle="bold"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <View
 
@@ -65,6 +66,17 @@
                 android:layout_marginTop="1dp"
                 android:hint="@string/contentInCardView"
                 android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/notedate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/notedesc"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                android:hint="@string/date"
+                android:textColor="#000"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 

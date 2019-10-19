@@ -2,42 +2,140 @@ package com.akshat.fireapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.renderscript.Sampler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.SnapshotParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import okhttp3.HttpUrl;
 
 public class NoteStaggeredView extends AppCompatActivity {
 
     private static final String TAG = "NoteStaggeredView";
     private static final int NUM_COLUMNS = 2;
     private static final int ADD_NOTE_REQUEST = 1;
-    // private ArrayList<String> mImageUrls = new ArrayList<>();
-    // private ArrayList<String> mNames = new ArrayList<>();
+
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> contents = new ArrayList<>();
     private ArrayList<String> contentsDisplay = new ArrayList<>();
-    private List<NewNoteActivity> noteList = new ArrayList<>();
-    private Context mainContext;
+    private ArrayList<String> dates = new ArrayList<>();
+
+    private List<Upload> noteObjectList = new ArrayList<>();
+
     private FloatingActionButton fab_add_note;
+    private RecyclerView recyclerView;
+    //private ChildEventListener noteListener;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private StorageTask mUploadTask;
+    private DatabaseReference mDatabaseRef;
+    private StorageReference mStorageRef;
+
+    private FirebaseRecyclerAdapter adapter;
+
+    private StaggeredGridLayoutManager staggeredGridLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_staggered_view);
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(user.getDisplayName());
+        mStorageRef = FirebaseStorage.getInstance().getReference(user.getDisplayName());
+
+        recyclerView = findViewById(R.id.recyclerView);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, LinearLayoutManager.VERTICAL);
+
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+
+        Query query = mDatabaseRef;
+
+        FirebaseRecyclerOptions<Upload> options =
+                new FirebaseRecyclerOptions.Builder<Upload>()
+                        .setQuery(query, new SnapshotParser<Upload>() {
+                            @NonNull
+                            @Override
+                            public Upload parseSnapshot(@NonNull DataSnapshot snapshot) {
+                                Upload upload = snapshot.getValue(Upload.class);
+                                String title = upload.mName;
+                                String textFileUrl = upload.mTextFileUrl;
+                                String date = upload.mDate;
+                                return new Upload(title,textFileUrl,date);
+                            }
+                        })
+                        .build();
+
+
+        adapter = new FirebaseRecyclerAdapter<Upload, SViewHolder>(options) {
+            @NonNull
+            @Override
+            public SViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_grid_item, parent, false);
+                return new SViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull SViewHolder holder, int position, @NonNull Upload model) {
+                Log.d(TAG, "onBindViewHolder: called.");
+
+                holder.notetitle.setText(model.getName());
+
+                holder.notecontent.setText(model.getmTextFileUrl());
+                String url = holder.notecontent.getText().toString();
+                new RetrieveStream().execute(url);
+
+                holder.notedate.setText(model.getmDate());
+            }
+        };
+
+        recyclerView.setAdapter(adapter);
 
 
         fab_add_note = (FloatingActionButton) findViewById(R.id.add_note);
@@ -49,20 +147,70 @@ public class NoteStaggeredView extends AppCompatActivity {
 
                 //case (R.id.name_widget) : i = new Intent(mContext, NewNoteAcitivity.class); mContext.startActivity(i); break;
                 i = new Intent(NoteStaggeredView.this, NewNoteActivity.class);
-                startActivityForResult(i, ADD_NOTE_REQUEST);
+                startActivity(i);
             }
         });
 
+        /*noteListener = new ChildEventListener(){
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Upload upload = dataSnapshot.getValue(Upload.class);
+                noteObjectList.add(0,upload);
+                staggeredRecyclerViewAdapter.notifyDataSetChanged();
+            }
 
-        // Collections.reverse(mNames);
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
+            }
 
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-        //staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };*/
+
+        /*  noteListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Upload upload = dataSnapshot.getValue(Upload.class);
+                noteObjectList.add(0,upload);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };*/
+
+//        mDatabaseRef.addChildEventListener(noteListener);
 
     }
 
-    @Override
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        ArrayList<NoteUtil> notes = Utilities.getAllSavedNotes(this);
+//
+//        if(notes!=null || notes.size() == 0)
+//        {
+//            Toast.makeText(this, "No saved notes!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//    }
+
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -71,24 +219,67 @@ public class NoteStaggeredView extends AppCompatActivity {
             String title = data.getStringExtra(NewNoteActivity.EXTRA_TITLE);
             String content = data.getStringExtra(NewNoteActivity.EXTRA_DESCRIPTION);
             String contentDisplay = data.getStringExtra(NewNoteActivity.EXTRA_DESCRIPTIONDISPLAY);
+            String date = data.getStringExtra(NewNoteActivity.EXTRA_DATE);
 
             titles.add(0,title);
             contents.add(0,content);
             contentsDisplay.add(0,contentDisplay);
-
-//            Collections.reverse(titles);
-//            Collections.reverse(contents);
-            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+            dates.add(0,date);
 
             StaggeredRecyclerViewAdapter staggeredRecyclerViewAdapter =
                     // new StaggeredRecyclerViewAdapter(this, mNames, mImageUrls);
-                    new StaggeredRecyclerViewAdapter(this,titles,contentsDisplay);
+                    new StaggeredRecyclerViewAdapter(this,titles,contentsDisplay,dates);
 
             StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, LinearLayoutManager.VERTICAL);
 
             recyclerView.setLayoutManager(staggeredGridLayoutManager);
             recyclerView.setAdapter(staggeredRecyclerViewAdapter);
             //recyclerView.setHasFixedSize(true);
+        }
+    }*/
+
+    public static class SViewHolder extends RecyclerView.ViewHolder{
+
+        TextView notetitle,notecontent,notedate;
+
+        public SViewHolder(View itemView) {
+            super(itemView);
+            this.notetitle = itemView.findViewById(R.id.notetitle);
+            this.notecontent = itemView.findViewById(R.id.notedesc);
+            this.notedate = itemView.findViewById(R.id.notedate);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
+    class RetrieveStream extends AsyncTask<String,Void, InputStream> {
+
+        @Override
+        protected InputStream doInBackground(String... strings) {
+            InputStream inputStream = null;
+            try{
+                URL url = new URL(strings[0]);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                if(urlConnection.getResponseCode()==200){
+                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                }
+            }
+            catch(IOException e)
+            {
+                return null;
+            }
+
+            return inputStream;
         }
     }
 }

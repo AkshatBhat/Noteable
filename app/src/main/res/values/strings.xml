@@ -26,4 +26,5 @@
     <string name="create_note">Create Note</string>
     <string name="titleInCardView">title</string>
     <string name="contentInCardView">content</string>
+    <string name="date">date</string>
 </resources>

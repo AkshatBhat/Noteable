@@ -1,36 +1,36 @@
 package com.akshat.fireapp;
 
 public class Upload {
-    private String mName;
-    private String mImageUrl;
+    public String mName;
+    public String mTextFileUrl;
+    public String mDate;
     public Upload()
     {
         //empty constructor needed
     }
-    public Upload(String name,String imageUrl)
+    public Upload(String name,String textFileUrl,String date)
     {
         if(name.trim().equals("")){
             name = "No Name";
         }
 
         mName = name;
-        mImageUrl = imageUrl;
+        mTextFileUrl = textFileUrl;
+        mDate = date;
     }
+
+    public String getmDate() {
+        return mDate;
+    }
+
 
     public String getName(){
         return(mName);
     }
 
-    public void setName(String name){
-        mName = name;
-    }
 
-    public String getImageUrl()
+    public String getmTextFileUrl()
     {
-        return mImageUrl;
-    }
-    public void setImageUrl(String imageUrl)
-    {
-        mImageUrl = imageUrl;
+        return mTextFileUrl;
     }
 }
