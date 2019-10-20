@@ -161,7 +161,7 @@ public class NewNoteActivity extends AppCompatActivity {
                                 fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        Upload upload = new Upload(title,taskSnapshot.getUploadSessionUri().toString(),date);
+                                        Upload upload = new Upload(title,uri.toString(),date);
                                         mDatabaseRef.child(title).setValue(upload);
                                         Toast.makeText(getApplicationContext(),"Upload Successful",Toast.LENGTH_LONG).show();
                                     }

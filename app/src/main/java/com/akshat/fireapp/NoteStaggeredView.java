@@ -1,11 +1,13 @@
 package com.akshat.fireapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.os.StrictMode;
 import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,15 +43,20 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import okhttp3.HttpUrl;
 
@@ -80,10 +87,19 @@ public class NoteStaggeredView extends AppCompatActivity {
 
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
 
+    /*private String contentOfURL;
+    private String urlString;
+    private String TextHolder = "" , TextHolder2 = "";
+    private URL url;
+    private BufferedReader bufferReader;*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_staggered_view);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -92,7 +108,7 @@ public class NoteStaggeredView extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, LinearLayoutManager.VERTICAL);
-
+        staggeredGridLayoutManager.setReverseLayout(false);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
         Query query = mDatabaseRef;
@@ -127,9 +143,73 @@ public class NoteStaggeredView extends AppCompatActivity {
 
                 holder.notetitle.setText(model.getName());
 
-                holder.notecontent.setText(model.getmTextFileUrl());
-                String url = holder.notecontent.getText().toString();
-                new RetrieveStream().execute(url);
+                //final String urlString = model.getmTextFileUrl();
+                String urlString = model.getmTextFileUrl();
+                //new GetNotePadFileFromServer().execute();
+                String TextHolder="",TextHolder2="",contentDisplay="";
+                try {
+                    URL url = new URL(urlString);
+
+                    BufferedReader bufferReader = new BufferedReader(new InputStreamReader(url.openStream()));
+
+                    while ((TextHolder2 = bufferReader.readLine()) != null) {
+
+                        TextHolder = TextHolder + TextHolder2 +"\n";
+                    }
+                    bufferReader.close();
+
+                } catch (MalformedURLException malformedURLException) {
+
+                    malformedURLException.printStackTrace();
+                    TextHolder = malformedURLException.toString();
+
+                } catch (IOException iOException) {
+
+                    iOException.printStackTrace();
+                    TextHolder = iOException.toString();
+                }
+
+
+//                new Thread(new Runnable()
+//                {
+//                    @Override
+//                    public void run()
+//                    {
+//                        try
+//                        {
+//
+//                            URL url = new URL(urlString);//my app link change it
+//
+//                            HttpsURLConnection uc = (HttpsURLConnection) url.openConnection();
+//                            BufferedReader br = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+//                            StringBuilder lin2 = new StringBuilder();
+//                            String line;
+//
+//                            while ((line = br.readLine()) != null)
+//                            {
+//                                lin2.append(line);
+//                            }
+//
+//                            contentOfURL = lin2.toString();
+//                            Log.d("texts", "onClick: "+lin2);
+//                        } catch (IOException e)
+//                        {
+//                            Log.d("texts", "onClick: "+e.getLocalizedMessage());
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                }).start();
+
+                if(TextHolder.length()<=65)
+                {
+                    contentDisplay = TextHolder;
+                }
+                else
+                {
+                    contentDisplay = TextHolder.substring(0,65) + "..." + "\n";
+                }
+                holder.notecontent.setText(contentDisplay);
 
                 holder.notedate.setText(model.getmDate());
             }
@@ -262,26 +342,53 @@ public class NoteStaggeredView extends AppCompatActivity {
         adapter.stopListening();
     }
 
-    class RetrieveStream extends AsyncTask<String,Void, InputStream> {
 
-        @Override
-        protected InputStream doInBackground(String... strings) {
-            InputStream inputStream = null;
-            try{
-                URL url = new URL(strings[0]);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                if(urlConnection.getResponseCode()==200){
-                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                }
-            }
-            catch(IOException e)
-            {
-                return null;
-            }
 
-            return inputStream;
-        }
-    }
+//    public class GetNotePadFileFromServer extends AsyncTask<Void, Void, Void>{
+//
+//        @Override
+//        protected Void doInBackground(Void... params) {
+//
+//            try {
+//                url = new URL(urlString);
+//
+//                bufferReader = new BufferedReader(new InputStreamReader(url.openStream()));
+//
+//                while ((TextHolder2 = bufferReader.readLine()) != null) {
+//
+//                    TextHolder += TextHolder2;
+//                }
+//                bufferReader.close();
+//
+//            } catch (MalformedURLException malformedURLException) {
+//
+//
+//                malformedURLException.printStackTrace();
+//                TextHolder = malformedURLException.toString();
+//
+//            } catch (IOException iOException) {
+//
+//
+//                iOException.printStackTrace();
+//
+//                TextHolder = iOException.toString();
+//            }
+//
+//            return null;
+//
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void finalTextHolder) {
+//
+//            //textView.setText(TextHolder);
+//            contentOfURL = TextHolder;
+//            super.onPostExecute(finalTextHolder);
+//        }
+//
+//    }
+
+
 }
 
 
