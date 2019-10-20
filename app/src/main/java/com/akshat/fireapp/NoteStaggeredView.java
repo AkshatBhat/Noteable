@@ -137,6 +137,28 @@ public class NoteStaggeredView extends AppCompatActivity {
                 return new SViewHolder(view);
             }
 
+            @NonNull
+            @Override
+            public Upload getItem(int position) {
+                return super.getItem(getItemCount()-1-position);
+            }
+
+            @Override
+            public int getItemCount() {
+                return super.getItemCount();
+            }
+
+            @Override
+            public void updateOptions(@NonNull FirebaseRecyclerOptions<Upload> options) {
+                super.updateOptions(options);
+            }
+
+            @Override
+            public void onDataChanged() {
+                recyclerView.removeAllViews();
+                super.onDataChanged();
+            }
+
             @Override
             protected void onBindViewHolder(@NonNull SViewHolder holder, int position, @NonNull Upload model) {
                 Log.d(TAG, "onBindViewHolder: called.");
@@ -212,6 +234,7 @@ public class NoteStaggeredView extends AppCompatActivity {
                 holder.notecontent.setText(contentDisplay);
 
                 holder.notedate.setText(model.getmDate());
+
             }
         };
 

@@ -64,7 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setColor(getResources().getColor(R.color.Primary));
+                ds.setColor(getResources().getColor(R.color.PrimaryComplement));
                 ds.setUnderlineText(false);
             }
         };
