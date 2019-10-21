@@ -1,5 +1,4 @@
 package com.akshat.fireapp;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,8 +33,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Bucky";
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -82,11 +79,11 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        email = (EditText) findViewById(R.id.email);
-        password = (EditText) findViewById(R.id.password);
-        loginbutton = (Button) findViewById(R.id.signupbutton);
-        signup = (TextView) findViewById(R.id.sign_up);
-        forgotpass = (TextView) findViewById(R.id.forgot_password);
+        email =  findViewById(R.id.email);
+        password =  findViewById(R.id.password);
+        loginbutton = findViewById(R.id.signupbutton);
+        signup =  findViewById(R.id.sign_up);
+        forgotpass = findViewById(R.id.forgot_password);
         progressDialog = new ProgressDialog(this);
 
         SpannableString sss = new SpannableString(signup.getText());

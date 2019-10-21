@@ -1,16 +1,18 @@
 package com.akshat.fireapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,14 +24,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.squareup.picasso.Picasso;
 
-public class AccountActivity extends AppCompatActivity {
+public class AccountActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Button logoutbutton;
+    private Toolbar toolbar;
+    private NavigationView navigation;
+    private DrawerLayout drawer;
     private TextView displayusername;
     private ImageView displayimage;
     private TextView displayemail;
@@ -40,7 +45,7 @@ public class AccountActivity extends AppCompatActivity {
     private static final String TAG = "GoogleSignInTAG";
     private ProgressDialog progressDialog;
     private static final String DIALOGMESSAGE = "Logging out ...";
-    private FloatingActionButton fab ;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,37 +53,69 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
 
         mAuth = FirebaseAuth.getInstance();
-
         progressDialog = new ProgressDialog(this);
-        logoutbutton = (Button) findViewById(R.id.log_out_button);
-        displayusername = (TextView)findViewById(R.id.display_username);
-        displayemail = (TextView)findViewById(R.id.display_email);
-        displayimage = (ImageView)findViewById(R.id.profile_image);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        displayusername = findViewById(R.id.display_username);
+        displayemail = findViewById(R.id.display_email);
+        displayimage = findViewById(R.id.profile_image);
+        drawer = findViewById(R.id.drawer_layout);
+        toolbar = findViewById(R.id.toolbar);
+        navigation = findViewById(R.id.nav_view);
 
-        logoutbutton.setOnClickListener(
-                new Button.OnClickListener(){
-                    public void onClick(View v) {
+        setSupportActionBar(toolbar);
+        //drawer toggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.nav_open, R.string.nav_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        //adds the rotating hamburger toggle animation
+
+        //navigation view add
+        navigation.setNavigationItemSelectedListener(this
+//                new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                return false;
+//            }
+//        } //the above is do-able but for code simplicity we implement
+//        this method and pass the class' reference
+        );
+        //this will set listener on navigation drawer
+        //
+        if(savedInstanceState==null) {//find out later why
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment, new HomeFragment())
+                    .commit();
+            navigation.setCheckedItem(R.id.nav_home);
+        }
+        //default checked nav !
+
+
+/*        logoutbutton.setOnMenuItemClickListener(
+                new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
                         showProgressDialogWithTitle(DIALOGMESSAGE);
                         if (account != null) {
                             mAuth.signOut();
                             mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     // user is now signed out
-                                    Toast.makeText(AccountActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-                                    Log.d(TAG,"Google SignOut Successful");
-                                }});
-                        }
-
-                        else {
+                                    Toast.makeText(AccountActivity.this, "Logged out successfully",
+                                            Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, "Google SignOut Successful");
+                                }
+                            });
+                        } else {
                             mAuth.signOut();
-                            Toast.makeText(AccountActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AccountActivity.this, "Logged out successfully",
+                                    Toast.LENGTH_SHORT).show();
                         }
+                        return true;
                     }
                 }
-        );
-
-        fab.setOnClickListener(new FloatingActionButton.OnClickListener() {
+        );*/
+        /*fab.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), NoteStaggeredView.class);
@@ -87,7 +124,7 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
             }
-        });
+        });*/
 
         getUserProfile();
         getProviderData();
@@ -115,6 +152,46 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onNavigationItemSelected(MenuItem menu) {
+        switch(menu.getItemId()){
+            case R.id.nav_home:getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment,new HomeFragment())
+                    .commit();
+                break;
+            case R.id.nav_personal:getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment,new PersonalFragment())
+                    .commit();
+                break;
+            case R.id.nav_shared:getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment,new SharedFragment())
+                    .commit();
+                break;
+            case R.id.nav_chat:getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment,new ChatFragment())
+                    .commit();
+                break;
+            case R.id.nav_settings:getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment,new SettingsFragment())
+                    .commit();
+                break;
+            case R.id.nav_about:getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_fragment,new AboutFragment())
+                    .commit();
+                break;
+            case R.id.nav_logout://intent change
+                break;
+        }
+        drawer.closeDrawer(GravityCompat.START);//close drawer after selection
+        return true;
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         account = GoogleSignIn.getLastSignedInAccount(this);
@@ -122,9 +199,12 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     private Boolean exit = false;
+
     @Override
     public void onBackPressed() {
-        if (exit) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (exit) {
             finish(); // finish activity
         } else {
             Toast.makeText(this, "Press Back again to Exit.",
@@ -173,13 +253,13 @@ public class AccountActivity extends AppCompatActivity {
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             //String uid = user.getUid();
-            displayusername.setText("Username: "+name);
-            displayemail.setText("Email: "+email);
+            /*displayusername.setText("Username: " + name);
+            displayemail.setText("Email: " + email);
             Picasso.get()
                     .load(photoUrl)
                     .placeholder(R.drawable.profileicon)
                     .error(R.drawable.profileicon)
-                    .into(displayimage);
+                    .into(displayimage);*/
         }
         // [END get_user_profile]
     }
@@ -200,18 +280,19 @@ public class AccountActivity extends AppCompatActivity {
                 String email = profile.getEmail();
                 Uri photoUrl = profile.getPhotoUrl();
 
-                displayusername.setText("Username: "+name);
-                displayemail.setText("Email: "+email);
+                /*displayusername.setText("Username: " + name);
+                displayemail.setText("Email: " + email);
                 Picasso.get()
                         .load(photoUrl)
                         .placeholder(R.drawable.profileicon)
                         .error(R.drawable.profileicon)
-                        .into(displayimage);
+                        .into(displayimage);*/
 
             }
         }
         // [END get_provider_data]
     }
+
 
 
 }

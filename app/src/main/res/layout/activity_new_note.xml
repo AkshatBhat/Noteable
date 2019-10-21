@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@drawable/create_btn"
+            android:background="@color/Secondary"
             android:text="@string/create_note"
             android:textColor="@color/cardview_light_background"/>
         <!--<TextView

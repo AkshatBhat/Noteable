@@ -4,34 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NoteStaggeredView"
-    android:background="@drawable/gradient1">
+    android:background="@android:color/white"
+
+    tools:context=".NoteStaggeredView">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:id="@+id/recyclerView"
-        />
-
+        app:layout_constraintTop_toTopOf="parent" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_note"
+        android:id="@+id/add_note_local"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-
+        android:layout_gravity="bottom|center"
+        android:foregroundGravity="bottom|center_horizontal"
         app:backgroundTint="@color/SecondaryLight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.921"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.973"
         app:srcCompat="@drawable/ic_add_black_24dp" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
