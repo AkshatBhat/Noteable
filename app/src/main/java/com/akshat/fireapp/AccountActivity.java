@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +24,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,7 +45,7 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
     private static final String TAG = "GoogleSignInTAG";
     private ProgressDialog progressDialog;
     private static final String DIALOGMESSAGE = "Logging out ...";
-    private FloatingActionButton fab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,12 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
         drawer = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
         navigation = findViewById(R.id.nav_view);
+        //testing
+        Log.d(TAG, displayusername.toString());
+        Log.d(TAG, displayemail.toString());
+        Log.d(TAG, displayimage.toString());
+
+
 
         setSupportActionBar(toolbar);
         //drawer toggle
@@ -80,6 +86,7 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
 //        this method and pass the class' reference
         );
         //this will set listener on navigation drawer
+
         //
         if(savedInstanceState==null) {//find out later why
             getSupportFragmentManager()
@@ -89,42 +96,6 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
             navigation.setCheckedItem(R.id.nav_home);
         }
         //default checked nav !
-
-
-/*        logoutbutton.setOnMenuItemClickListener(
-                new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        showProgressDialogWithTitle(DIALOGMESSAGE);
-                        if (account != null) {
-                            mAuth.signOut();
-                            mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    // user is now signed out
-                                    Toast.makeText(AccountActivity.this, "Logged out successfully",
-                                            Toast.LENGTH_SHORT).show();
-                                    Log.d(TAG, "Google SignOut Successful");
-                                }
-                            });
-                        } else {
-                            mAuth.signOut();
-                            Toast.makeText(AccountActivity.this, "Logged out successfully",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        return true;
-                    }
-                }
-        );*/
-        /*fab.setOnClickListener(new FloatingActionButton.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), NoteStaggeredView.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
-                finish();
-            }
-        });*/
 
         getUserProfile();
         getProviderData();
@@ -184,7 +155,23 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
                     .replace(R.id.main_fragment,new AboutFragment())
                     .commit();
                 break;
-            case R.id.nav_logout://intent change
+            case R.id.nav_logout://logout
+                showProgressDialogWithTitle(DIALOGMESSAGE);
+                if (account != null) {
+                    mAuth.signOut();
+                    mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        public void onComplete(@NonNull Task<Void> task) {
+                            // user is now signed out
+                            Toast.makeText(AccountActivity.this, "Logged out successfully",
+                                    Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Google SignOut Successful");
+                        }
+                    });
+                } else {
+                    mAuth.signOut();
+                    Toast.makeText(AccountActivity.this, "Logged out successfully",
+                            Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);//close drawer after selection
@@ -242,8 +229,8 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
+            String name = user.getDisplayName().toString();
+            String email = user.getEmail().toString();
             Uri photoUrl = user.getPhotoUrl();
 
             // Check if user's email is verified or not

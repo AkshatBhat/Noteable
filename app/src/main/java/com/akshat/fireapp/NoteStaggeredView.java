@@ -84,7 +84,7 @@ public class NoteStaggeredView extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference(user.getDisplayName());
         mStorageRef = FirebaseStorage.getInstance().getReference(user.getDisplayName());
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.RecyclerView);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, LinearLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setReverseLayout(false);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -219,7 +219,7 @@ public class NoteStaggeredView extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        fab_add_note = (FloatingActionButton) findViewById(R.id.add_note);
+        fab_add_note = findViewById(R.id.add_note);
         fab_add_note.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {

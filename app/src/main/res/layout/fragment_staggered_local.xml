@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-
-    tools:context=".NoteStaggeredView">
+    tools:context=".PersonalFragment"
+    android:layout_marginTop="?attr/actionBarSize">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/localRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -21,11 +21,9 @@
         android:id="@+id/add_note_local"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:foregroundGravity="bottom|center_horizontal"
+        android:layout_gravity="bottom|right"
         app:backgroundTint="@color/SecondaryLight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_add_black_24dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
