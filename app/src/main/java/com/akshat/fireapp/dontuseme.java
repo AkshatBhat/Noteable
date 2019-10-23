@@ -1,20 +1,34 @@
+/*
 package com.akshat.fireapp;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.os.StrictMode;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -23,36 +37,51 @@ import com.firebase.ui.database.SnapshotParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-public class NoteStaggeredView extends AppCompatActivity {
+import javax.net.ssl.HttpsURLConnection;
+
+import okhttp3.HttpUrl;
+
+public class dontuseme extends AppCompatActivity {
 
     private static final String TAG = "NoteStaggeredView";
-    private static final int NUM_COLUMNS = 2;
-    private static final int ADD_NOTE_REQUEST = 1;
-
     public static final String EXTRA_TITLE = "codingwithmitch.com.recyclerviewstaggered.EXTRA_TITLE";
     public static final String EXTRA_CONTENT = "codingwithmitch.com.recyclerviewstaggered.EXTRA_CONTENT";
-    private ArrayList<String> titles = new ArrayList<>();
-    private ArrayList<String> contents = new ArrayList<>();
-    private ArrayList<String> contentsDisplay = new ArrayList<>();
-    private ArrayList<String> dates = new ArrayList<>();
+    private ProgressDialog progressDialog;
+    private static final int NUM_COLUMNS = 2;
+    private static final int ADD_NOTE_REQUEST = 1;
     private static final String DIALOGMESSAGE = "Loading ...";
-    private List<Upload> noteObjectList = new ArrayList<>();
+
+//    private ArrayList<String> titles = new ArrayList<>();
+//    private ArrayList<String> contents = new ArrayList<>();
+//    private ArrayList<String> contentsDisplay = new ArrayList<>();
+//    private ArrayList<String> dates = new ArrayList<>();
+//
+//    private List<Upload> noteObjectList = new ArrayList<>();
 
     private FloatingActionButton fab_add_note;
     private RecyclerView recyclerView;
@@ -63,23 +92,29 @@ public class NoteStaggeredView extends AppCompatActivity {
     private StorageTask mUploadTask;
     private DatabaseReference mDatabaseRef;
     private StorageReference mStorageRef;
-    private ProgressDialog progressDialog;
+
     private FirebaseRecyclerAdapter adapter;
 
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
 
-    /*private String contentOfURL;
+    ConstraintLayout cl;
+    int size;
+    */
+/*private String contentOfURL;
     private String urlString;
     private String TextHolder = "" , TextHolder2 = "";
     private URL url;
-    private BufferedReader bufferReader;*/
+    private BufferedReader bufferReader;*//*
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_staggered_home);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        cl = findViewById(R.id.CL);
+
+        final StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         mAuth = FirebaseAuth.getInstance();
@@ -87,7 +122,17 @@ public class NoteStaggeredView extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference(user.getDisplayName());
         mStorageRef = FirebaseStorage.getInstance().getReference(user.getDisplayName());
         progressDialog = new ProgressDialog(this);
+
+
+//        showProgressDialogWithTitle(DIALOGMESSAGE);
         recyclerView = findViewById(R.id.RecyclerView);
+//        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                hideProgressDialogWithTitle();
+//                recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//            }
+//        });
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, LinearLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setReverseLayout(false);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -143,12 +188,11 @@ public class NoteStaggeredView extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull SViewHolder holder, int position, @NonNull Upload model) {
                 Log.d(TAG, "onBindViewHolder: called.");
-
                 holder.notetitle.setText(model.getName());
+                final String titlePut = model.getName();
 
                 //final String urlString = model.getmTextFileUrl();
                 String urlString = model.getmTextFileUrl();
-                final String titlePut = model.getName();
                 //new GetNotePadFileFromServer().execute();
                 String TextHolder = "", TextHolder2 = "", contentDisplay = "";
                 try {
@@ -213,16 +257,12 @@ public class NoteStaggeredView extends AppCompatActivity {
                 holder.notecontent.setText(contentDisplay);
 
                 holder.notedate.setText(model.getmDate());
-                holder.notecontent.setText(contentDisplay);
-
-                holder.notedate.setText(model.getmDate());
 
                 holder.notecontent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG, "Clicked on content!");
+                        //Log.d(TAG, "onClick: clicked on: " + mNames.get(position));
                         //Toast.makeText(mContext, mNames.get(position), Toast.LENGTH_SHORT).show();
-
                         Intent i;
                         i = new Intent(getApplicationContext(), EditNoteActivity.class);
                         i.putExtra(EXTRA_TITLE, titlePut);
@@ -234,7 +274,7 @@ public class NoteStaggeredView extends AppCompatActivity {
                 holder.notetitle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG, "Clicked on title!");
+                        //Log.d(TAG, "onClick: clicked on: " + mNames.get(position));
                         //Toast.makeText(mContext, mNames.get(position), Toast.LENGTH_SHORT).show();
                         Intent i;
                         i = new Intent(getApplicationContext(), EditNoteActivity.class);
@@ -246,14 +286,14 @@ public class NoteStaggeredView extends AppCompatActivity {
                 });
                 if (position == getItemCount() - 1)
                     hideProgressDialogWithTitle();
-
             }
+
         };
 
         recyclerView.setAdapter(adapter);
 
 
-        fab_add_note = findViewById(R.id.add_note);
+        fab_add_note = (FloatingActionButton) findViewById(R.id.add_note);
         fab_add_note.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,12 +301,13 @@ public class NoteStaggeredView extends AppCompatActivity {
                 Intent i;
 
                 //case (R.id.name_widget) : i = new Intent(mContext, NewNoteAcitivity.class); mContext.startActivity(i); break;
-                i = new Intent(NoteStaggeredView.this, NewNoteActivity.class);
+                i = new Intent(dontuseme.this, NewNoteActivity.class);
                 startActivity(i);
             }
         });
-
-        /*noteListener = new ChildEventListener(){
+    }
+        */
+/*noteListener = new ChildEventListener(){
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Upload upload = dataSnapshot.getValue(Upload.class);
@@ -293,9 +334,11 @@ public class NoteStaggeredView extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
-        };*/
+        };*//*
 
-        /*  noteListener = new ValueEventListener() {
+
+        */
+/*  noteListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Upload upload = dataSnapshot.getValue(Upload.class);
@@ -306,11 +349,12 @@ public class NoteStaggeredView extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
-        };*/
+        };*//*
+
 
 //        mDatabaseRef.addChildEventListener(noteListener);
 
-    }
+
 
 //    @Override
 //    protected void onResume() {
@@ -325,7 +369,8 @@ public class NoteStaggeredView extends AppCompatActivity {
 //        }
 //    }
 
-    /*@Override
+    */
+/*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -351,11 +396,12 @@ public class NoteStaggeredView extends AppCompatActivity {
             recyclerView.setAdapter(staggeredRecyclerViewAdapter);
             //recyclerView.setHasFixedSize(true);
         }
-    }*/
+    }*//*
 
-    public static class SViewHolder extends RecyclerView.ViewHolder {
 
-        TextView notetitle, notecontent, notedate;
+    public static class SViewHolder extends RecyclerView.ViewHolder{
+
+        TextView notetitle,notecontent,notedate;
 
         public SViewHolder(View itemView) {
             super(itemView);
@@ -367,8 +413,8 @@ public class NoteStaggeredView extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        showProgressDialogWithTitle(DIALOGMESSAGE);
         super.onStart();
+        showProgressDialogWithTitle(DIALOGMESSAGE);
         adapter.startListening();
     }
 
@@ -377,6 +423,7 @@ public class NoteStaggeredView extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
 
 
 //    public class GetNotePadFileFromServer extends AsyncTask<Void, Void, Void>{
@@ -422,13 +469,15 @@ public class NoteStaggeredView extends AppCompatActivity {
 //        }
 //
 //    }
-private void showProgressDialogWithTitle(String substring) {
-    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-    //Without this user can hide loader by tapping outside screen
-    progressDialog.setCancelable(false);
-    progressDialog.setMessage(substring);
-    progressDialog.show();
-}
+
+    // Method to show Progress bar
+    private void showProgressDialogWithTitle(String substring) {
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        //Without this user can hide loader by tapping outside screen
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(substring);
+        progressDialog.show();
+    }
 
     // Method to hide/ dismiss Progress bar
     private void hideProgressDialogWithTitle() {
@@ -436,21 +485,4 @@ private void showProgressDialogWithTitle(String substring) {
         progressDialog.dismiss();
     }
 
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}*/

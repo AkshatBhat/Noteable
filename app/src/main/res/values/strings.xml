@@ -12,6 +12,7 @@
     <string name="todo">TODO</string>
     <string name="logoicon">iconlogo</string>
     <string name="new_user_sign_up">New User? Sign Up!</string>
+    <string name="save_changes">Save Changes</string>
     <string name="have_an_account_log_in">Have an account? Log In</string>
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>

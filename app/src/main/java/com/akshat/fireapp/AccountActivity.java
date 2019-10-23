@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +46,7 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
     private static final String TAG = "GoogleSignInTAG";
     private ProgressDialog progressDialog;
     private static final String DIALOGMESSAGE = "Logging out ...";
-
+    private View headerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +55,13 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
 
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        displayusername = findViewById(R.id.display_username);
-        displayemail = findViewById(R.id.display_email);
-        displayimage = findViewById(R.id.profile_image);
         drawer = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
         navigation = findViewById(R.id.nav_view);
-        //testing
-        Log.d(TAG, displayusername.toString());
-        Log.d(TAG, displayemail.toString());
-        Log.d(TAG, displayimage.toString());
-
-
-
+        headerview = navigation.getHeaderView(0);
+        displayusername = headerview.findViewById(R.id.display_username);
+        displayemail = headerview.findViewById(R.id.display_email);
+        displayimage = headerview.findViewById(R.id.profile_image);
         setSupportActionBar(toolbar);
         //drawer toggle
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -95,7 +90,7 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
                     .commit();
             navigation.setCheckedItem(R.id.nav_home);
         }
-        //default checked nav !
+        //default checked nav is home !
 
         getUserProfile();
         getProviderData();
@@ -132,7 +127,7 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
                 break;
             case R.id.nav_personal:getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_fragment,new PersonalFragment())
+                    .replace(R.id.main_fragment,new HomeFragment())
                     .commit();
                 break;
             case R.id.nav_shared:getSupportFragmentManager()
@@ -240,13 +235,13 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             //String uid = user.getUid();
-            /*displayusername.setText("Username: " + name);
-            displayemail.setText("Email: " + email);
+            displayusername.setText(name);
+            displayemail.setText(email);
             Picasso.get()
                     .load(photoUrl)
                     .placeholder(R.drawable.profileicon)
                     .error(R.drawable.profileicon)
-                    .into(displayimage);*/
+                    .into(displayimage);
         }
         // [END get_user_profile]
     }
@@ -267,13 +262,13 @@ public class AccountActivity extends AppCompatActivity implements NavigationView
                 String email = profile.getEmail();
                 Uri photoUrl = profile.getPhotoUrl();
 
-                /*displayusername.setText("Username: " + name);
-                displayemail.setText("Email: " + email);
+                displayusername.setText(name);
+                displayemail.setText(email);
                 Picasso.get()
                         .load(photoUrl)
                         .placeholder(R.drawable.profileicon)
                         .error(R.drawable.profileicon)
-                        .into(displayimage);*/
+                        .into(displayimage);
 
             }
         }

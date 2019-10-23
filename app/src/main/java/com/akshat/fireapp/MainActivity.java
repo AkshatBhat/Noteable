@@ -33,6 +33,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Bucky";
@@ -220,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
         else if(TextUtils.isEmpty(Email) && TextUtils.isEmpty(Password)){
             Toast.makeText(MainActivity.this, "Fields are empty!", Toast.LENGTH_SHORT).show();
         }
-
         else {
             showProgressDialogWithTitle(DIALOGMESSAGE);
             mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
