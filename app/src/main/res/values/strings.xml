@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Noteable.</string>
+    <string name="Login_Button">LOGIN</string>
+    <string name="Signup_button">SIGN UP</string>
+    <string name="Email">Email</string>
+    <string name="password">Password</string>
+    <string name="account_logged_in_successfully">Account Logged In Successfully</string>
+    <string name="log_out">LOG OUT</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="splash_screen_logo">splash_screen_logo</string>
+    <string name="loading">Loading...</string>
+    <string name="todo">TODO</string>
+    <string name="logoicon">iconlogo</string>
+    <string name="new_user_sign_up">New User? Sign Up!</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="have_an_account_log_in">Have an account? Log In</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="updateprofile">Update Profile</string>
+    <string name="display_email">Display Email</string>
+    <string name="display_username">Display Username</string>
+    <string name="title_activity_notepad">Notepad</string>
+    <string name="title">Title</string>
+    <string name="type_your_description">Type your description...</string>
+    <string name="create_note">Create Note</string>
+    <string name="titleInCardView">title</string>
+    <string name="contentInCardView">content</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="date">date</string>
+    <string name="nav_open">Open Navigation Drawer</string>
+    <string name="nav_close">Close Navigation Drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

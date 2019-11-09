@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:translationZ="0dp"
+        android:layout_centerHorizontal="false"
+        android:layout_marginLeft="5dp"
+
+        android:layout_marginRight="5dp"
+
+        app:cardCornerRadius="4dp"
+        app:cardElevation="6dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="5dp"
+            android:background="@android:color/white">
+
+            <!--<ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"
+                android:id="@+id/imageview_widget"
+                android:scaleType="center"/>-->
+
+            <TextView
+                android:id="@+id/notetitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="6dp"
+                android:hint="@string/titleInCardView"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <View
+
+                android:id="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/notetitle"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="1dp"
+                android:alpha="0.3"
+                android:background="@color/GreyDark" />
+
+            <TextView
+                android:id="@+id/notedesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_line"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:hint="@string/contentInCardView"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/notedate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/notedesc"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                android:hint="@string/date"
+                android:textColor="@color/Backgroundgrey"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditNoteActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/new_note_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="@string/title"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:inputType="text"
+            android:autofillHints="" tools:targetApi="o"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:alpha="0.3"
+            android:background="@android:color/black" />
+
+        <EditText
+            android:id="@+id/new_note_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/type_your_description"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:autofillHints="" tools:targetApi="o"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/new_note_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/Secondary"
+                android:text="@string/save_changes"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp"
+                android:textColor="@color/cardview_light_background"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/deletebtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="@color/PrimaryComplement"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@string/delete_note"
+                android:textColor="@color/cardview_light_background" />
+            <!--<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NOTE CONTENT"
+            android:layout_gravity="center"
+            android:textSize="20sp" />-->
+        </LinearLayout>
+        <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NOTE CONTENT"
+        android:layout_gravity="center"
+        android:textSize="20sp" />-->
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
