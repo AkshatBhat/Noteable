@@ -1,10 +1,13 @@
 # Noteable
-![alt text](https://github.com/Arka-h/Noteable/blob/master/Readme_img/Noteable.png logo)
+![alt text](https://arka-h.github.io/Noteable/Readme_img/1.png "Splash Screen")
 ## [Current State]
 * Quickly jot down what’s on your mind!
 * Noteable. makes it easy to capture a thought or list for yourself, and share it with your family, friends,colleagues and teams.
 * With our application, you can __add__ a note, __edit__ a note, __delete__ a note, and __share__ notes via a variety of other applications.
 
+![alt text](https://arka-h.github.io/Noteable/Readme_img/2.png "Note")
+&nbsp;&nbsp;
+![alt text](https://arka-h.github.io/Noteable/Readme_img/3.png "Navigation")
 ## Motivation
 * Sharing of Ideas & Collaboration for projects, sharing resources and discussions in a single platform.
 * It aims to be an application that emphasises productivity & aims to provide and a dedicated platform for collaboration.
