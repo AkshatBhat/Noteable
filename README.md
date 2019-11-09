@@ -1,4 +1,5 @@
 # Noteable
+![alt text](https://github.com/Arka-h/Noteable/blob/master/Readme_img/Noteable.png logo)
 ## [Current State]
 * Quickly jot down what’s on your mind!
 * Noteable. makes it easy to capture a thought or list for yourself, and share it with your family, friends,colleagues and teams.
