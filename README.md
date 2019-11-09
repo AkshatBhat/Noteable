@@ -1,8 +1,15 @@
 # Noteable
+## [Current State]
+* Quickly jot down what’s on your mind!
+* Noteable. makes it easy to capture a thought or list for yourself, and share it with your family, friends,colleagues and teams.
+* With our application, you can __add__ a note, __edit__ a note, __delete__ a note, and __share__ notes via a variety of other applications.
 
-### * Quickly jot down what’s on your mind!
-### * Noteable. makes it easy to capture a thought or list for yourself, and share it with your family, friends, and colleagues.
-### * With our application, you can add a note, edit a note, delete a note, and share notes via a variety of other applications.
+## Motivation
+* Sharing of Ideas & Collaboration for projects, sharing resources and discussions in a single platform.
+* It aims to be an application that emphasises productivity & aims to provide and a dedicated platform for collaboration.
+## Future Scope
+* Addition of an in app ChatRoom through which users can colaborate on ideas and edit them simultaneously.
+* Adding support to storing multiple types of notes, and multimedia data, along with note sharing across contacts.
 
-
-For latest project report: [Click here](https://docs.google.com/document/d/1-8TQGejZDhclUNEd50F8P6YbAGOKK-bmvOUWf4DH2rI/edit?usp=sharing)
+[Current State]: https://docs.google.com/document/d/1-8TQGejZDhclUNEd50F8P6YbAGOKK-bmvOUWf4DH2rI/edit?usp=sharing
+##### For latest project report: [Click here](https://docs.google.com/document/d/1-8TQGejZDhclUNEd50F8P6YbAGOKK-bmvOUWf4DH2rI/edit?usp=sharing)
