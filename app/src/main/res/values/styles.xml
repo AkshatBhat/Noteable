@@ -1,0 +1,26 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar"
+        android:screenOrientation="portrait">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/Secondary</item>
+        <item name="colorPrimaryDark">@color/Primary</item>
+        <item name="colorAccent">@color/Secondary</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
+    <style name="TextInputLayout">
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:textColor">#FFFF00</item>
+    </style>
+
+</resources>

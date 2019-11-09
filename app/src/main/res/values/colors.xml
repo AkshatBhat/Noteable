@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="PrimaryDark">      #081831</color>
+    <color name="Primary">          #003346</color>
+    <color name="PrimaryLight">     #30C5FF</color>
+    <color name="Secondary">        #ff8f00</color>
+    <color name="SecondaryLight">   #f8a53a </color>
+    <color name="GreyDark">         #41545d</color>
+    <color name="BlueGrey">         #90cdc8</color>
+    <color name="PrimaryComplement">#94a2ab</color>
+    <color name="ThemeCard">       #c3cfe2</color>
+    <color name="Backgroundgrey">  #B3C0CD</color>
+
+</resources>
