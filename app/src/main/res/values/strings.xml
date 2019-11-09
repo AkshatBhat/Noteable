@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Noteable.</string>
+    <string name="app_name">Noteable</string>
     <string name="Login_Button">LOGIN</string>
     <string name="Signup_button">SIGN UP</string>
     <string name="Email">Email</string>
